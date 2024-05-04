@@ -35,7 +35,7 @@ yarn start
 npm run build
 ```
 
-или
+илииии
 
 ```
 yarn build
