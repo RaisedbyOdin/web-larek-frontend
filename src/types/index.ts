@@ -6,7 +6,7 @@ export interface ICardActions {
 // интерфейс промиса
 export interface ILarekApi {
 	getLarekList: () => Promise<IProductItem[]>;
-	makeOrder: (value: IOrder) => Promise<IOrderResult>;
+	makeOrder: (value: IOrder) => Promise<ISuccess>;
 }
 
 // тип ошибки формы
@@ -16,6 +16,32 @@ export type FormErrors = Partial<Record<keyof IOrder, string>>;
 export type CatalogItemStatus = {
 	category: 'софт-скил' | 'хард-скил' | 'другое' | 'кнопка' | 'дополнительное';
 };
+
+// описание продукта
+export interface ICard {
+	image: string; 
+	title: string; 
+	category: string; 
+	price: number; 
+	description: string; 
+}
+
+// превью
+export interface ICardPreview {
+	description: string;
+}
+
+export interface ICardBasket {
+	title: string;
+	price: number;
+	index: number;
+}
+
+// интерфейс данных формы с адресом доставки
+export interface IDeliveryForm {
+	payment: string;
+	address: string;
+}
 
 // интерфейс данных страницы приложения
 export interface IPage {
@@ -31,7 +57,7 @@ export interface IAppState {
 	order: IOrder;
 }
 
-// интерфейс данных единицы товара
+// описание продукта
 export interface IProductItem {
 	id: string;
 	description: string;
@@ -41,61 +67,35 @@ export interface IProductItem {
 	price: number;
 }
 
-// интерфейс данных единицы товара на главной странице
-export interface ICard {
-	image: string; // ссылка на изображение
-	title: string; // название
-	category: string; // категория
-	price: number; // цена
-	description: string; // описание
-}
-
-// интерфейс данных в превью
-export interface ICardPreview {
-	description: string; // описание
-}
-
-export interface ICardBasket {
-	title: string; // название
-	price: number; // цена
-	index: number; // индекс в списке
-}
-
-// интерфейс данных формы с адресом доставки
-export interface IDeliveryForm {
-	payment: string;
-	address: string;
-}
-
-// интерфейс данных формы с контактами
+// контакты
 export interface IContactsForm {
 	email: string;
 	phone: string;
 }
 
-// интерфейс данных заказа
+// данные по заказу
 export interface IOrder extends IDeliveryForm, IContactsForm {
-	total: number; // сумма заказа
-	items: string[]; // массив с идентификаторами товаров
+	total: number;
+	items: string[];
 }
 
-// интерфейс корзины
+// корзина
 export interface IBasket {
 	items: HTMLElement[];
 	total: number;
 }
 
-// интерфейс успешного совершения заказа
+// заказ совершен успешно
 export interface ISuccess {
 	total: number | null;
 }
 
-// интерфейс данных модального окна
+// модальное окно
 export interface IModalData {
 	content: HTMLElement;
 }
 
-// интерфейс данных ответа сервера на создание заказа
-export interface IOrderResult {
-	id: number;
+// оформление заказа
+export interface ISuccess {
+	total: number;
 }

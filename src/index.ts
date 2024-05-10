@@ -8,10 +8,10 @@ import { cloneTemplate, ensureElement } from './utils/utils';
 import { Card, CardPreview, BasketItem } from './components/Card';
 import { Page } from './components/Page';
 import { Modal } from './components/common/Modal';
+import { Basket } from './components/common/Basket';
 import { Order } from './components/Order';
 import { IOrder, IProductItem, IDeliveryForm, IContactsForm } from './types';
 import { Contacts } from './components/Contacts';
-import { Basket } from './components/common/Basket';
 import { Success } from './components/common/Success';
 
 const events = new EventEmitter();
@@ -194,11 +194,11 @@ events.on(
 	}
 );
 
-//Отправка формы контактов + окно с успешным заказом
+//завершение оплаты
 events.on('contacts:submit', () => {
 	api
 		.makeOrder(appData.order)
-		.then((res) => {
+		.then((result) => {
 			const success = new Success(cloneTemplate(successTemplate), {
 				onClick: () => {
 					modal.close();
@@ -206,7 +206,9 @@ events.on('contacts:submit', () => {
 			});
 
 			modal.render({
-				content: success.render({}),
+				content: success.render({
+					total: result.total,
+				}),
 			});
 			appData.clearBasket();
 			page.counter = 0;

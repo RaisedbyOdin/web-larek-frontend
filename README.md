@@ -130,7 +130,7 @@ yarn build
 
 - `сatalog: IProductItem[]` — массив, содержащий карточки для отображения
 - `basket: string[]` — массив с идентификаторами заказов в корзине
-- `order: IOrder | null` — хранит в себе заказ для отправки на сервер
+- `order: IOrder` — хранит в себе заказ для отправки на сервер
 
 Методы класса:
 
@@ -302,64 +302,105 @@ yarn build
 ## Описание типов данных 
 
 ```ts
+// интерфейс события
+export interface ICardActions {
+	onClick: (event: MouseEvent) => void;
+}
+
+// интерфейс промиса
+export interface ILarekApi {
+	getLarekList: () => Promise<IProductItem[]>;
+	makeOrder: (value: IOrder) => Promise<IOrderResult>;
+}
+
+// тип ошибки формы
+export type FormErrors = Partial<Record<keyof IOrder, string>>;
+
+// тип категории товара
+export type CatalogItemStatus = {
+	category: 'софт-скил' | 'хард-скил' | 'другое' | 'кнопка' | 'дополнительное';
+};
+
 // интерфейс данных страницы приложения
-interface IPage {
-	counter: HTMLElement;
-	catalog: HTMLElement;
-	basket: HTMLElement;
+export interface IPage {
+	counter: HTMLElement; // элемент счетчика корзины
+	catalog: HTMLElement; // контейнер для отображения карточек
+	basket: HTMLElement; // элемент корзины
 }
 
 // интерфейс данных приложения
-interface IAppState {
-	catalog: IProductItem[];
-	basket: string[];
-	order: IOrder | null;
+export interface IAppState {
+	catalog: IProductItem[]; // массив с карточками для отображения
+	basket: string[]; // массив с идентификаторами заказов в корзине
+	order: IOrder; // хранит заказ для отправки на сервер
 }
 
 // интерфейс данных единицы товара
-interface IProductItem {
-	id: string;
-	description: string;
-	image: string;
-	title: string;
-	category: string;
-	price: number;
+export interface IProductItem {
+	id: string; // идентификатор
+	description: string; // описание
+	image: string; // ссылка на изображение
+	title: string; // название
+	category: string; // категория
+	price: number | null; // цена
 }
 
-// интерфейс данных заказа
-interface IOrder extends IAdressForm, IContactsForm {
-	items: string[];
-	total: number;
-}
-
-// интерфейс корзины
-interface IBasket {
-	items: HTMLElement[];
-	total: number;
-}
-
-// интерфейс данных формы с адресом доставки
-interface IDeliveryForm {
-	payment: string;
-	adress: string;
-}
-
-// интерфейс данных формы с контактами
-interface IContactsForm {
-	email: string;
-	phone: string;
+// интерфейс данных единицы товара на главной странице
+export interface ICard {
+	image: string; // ссылка на изображение
+	title: string; // название
+	category: string; // категория
+	price: number | null; // цена
+	description: string; // описание
+	index?: number;
 }
 
 // интерфейс успешного совершения заказа
-interface ISuccess {
-	total: number | null;
+export interface ISuccess {
+	total: number | null; // сумма заказа с сервера в ответ на успешный заказ
 }
 
-## Описание событий, которые обрабатывает брокер
+// интерфейс данных модального окна
+export interface IModalData {
+	content: HTMLElement;
+}
 
-- `cards:render` — отрисовать карточки, полученные с сервера в момент загрузки приложения
-- `modal:on` — открытие модального окна
-- `modal:off` — закрытие модального окна
-- `modal:button` — изменение кнопки (при добавлении товара в корзину, например)
-- `basket:update` — обновление отрисовки корзины (количество позиций и цена)
-- `form:change` — изменение формы (для записи в состояние приложения, чтобы вернуть при случайном закрытии)
+// интерфейс данных ответа сервера на создание заказа
+export interface IOrderResult {
+	total: number; // идентификатор заказа
+}
+
+// интерфейс данных в превью
+export interface ICardPreview {
+	description: string; // описание
+}
+
+export interface ICardBasket {
+	title: string; // название
+	price: number | null; // цена
+	index: number; // индекс в списке
+}
+
+// интерфейс данных формы с адресом доставки
+export interface IDeliveryForm {
+	payment: string; // способ оплаты
+	address: string; // адрес
+}
+
+// интерфейс данных формы с контактами
+export interface IContactsForm {
+	email: string; // почта
+	phone: string; // телефон
+}
+
+// интерфейс данных заказа
+export interface IOrder extends IDeliveryForm, IContactsForm {
+	total: number; // сумма заказа
+	items: string[]; // массив с идентификаторами товаров
+}
+
+// интерфейс корзины
+export interface IBasket {
+	items: HTMLElement[]; // массив карточек в корзине
+	total: number; // сумма заказа
+}
