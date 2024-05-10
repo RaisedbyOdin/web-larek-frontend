@@ -284,8 +284,8 @@ yarn build
 
 Методы класса:
 
-- `setEmail(value: string): void` — устанавливает email
-- `setPhone(value: string): void` — устанавливает телефон
+- `setEmail(value: string): void` — прописывает email
+- `setPhone(value: string): void` — прописывает телефон
 
 Свойства класса:
 
@@ -321,86 +321,86 @@ export type CatalogItemStatus = {
 	category: 'софт-скил' | 'хард-скил' | 'другое' | 'кнопка' | 'дополнительное';
 };
 
-// интерфейс данных страницы приложения
+// страница приложения
 export interface IPage {
-	counter: HTMLElement; // элемент счетчика корзины
-	catalog: HTMLElement; // контейнер для отображения карточек
-	basket: HTMLElement; // элемент корзины
+	counter: HTMLElement; 
+	catalog: HTMLElement; 
+	basket: HTMLElement; 
 }
 
-// интерфейс данных приложения
+// данные приложения
 export interface IAppState {
-	catalog: IProductItem[]; // массив с карточками для отображения
-	basket: string[]; // массив с идентификаторами заказов в корзине
-	order: IOrder; // хранит заказ для отправки на сервер
+	catalog: IProductItem[];
+	basket: string[];
+	order: IOrder;
 }
 
-// интерфейс данных единицы товара
+// данные единицы товара
 export interface IProductItem {
-	id: string; // идентификатор
-	description: string; // описание
-	image: string; // ссылка на изображение
-	title: string; // название
-	category: string; // категория
-	price: number | null; // цена
+	id: string;
+	description: string;
+	image: string; 
+	title: string; 
+	category: string;
+	price: number | null;
 }
 
-// интерфейс данных единицы товара на главной странице
+// данные единицы товара на главной странице
 export interface ICard {
-	image: string; // ссылка на изображение
-	title: string; // название
-	category: string; // категория
-	price: number | null; // цена
-	description: string; // описание
+	image: string;
+	title: string;
+	category: string;
+	price: number | null;
+	description: string;
 	index?: number;
 }
 
-// интерфейс успешного совершения заказа
+// успешное совершения заказа
 export interface ISuccess {
-	total: number | null; // сумма заказа с сервера в ответ на успешный заказ
+	total: number | null;
 }
 
-// интерфейс данных модального окна
+//данные модального окна
 export interface IModalData {
 	content: HTMLElement;
 }
 
-// интерфейс данных ответа сервера на создание заказа
+// данные ответа сервера
 export interface IOrderResult {
-	total: number; // идентификатор заказа
+	total: number;
 }
 
-// интерфейс данных в превью
+// данные в превью
 export interface ICardPreview {
-	description: string; // описание
+	description: string;
 }
 
 export interface ICardBasket {
-	title: string; // название
-	price: number | null; // цена
-	index: number; // индекс в списке
+	title: string; 
+	price: number | null; 
+	index: number; 
 }
 
-// интерфейс данных формы с адресом доставки
+// форма с адресом доставки
 export interface IDeliveryForm {
-	payment: string; // способ оплаты
-	address: string; // адрес
+	payment: string; 
+	address: string;
 }
 
-// интерфейс данных формы с контактами
+// форма с контактами
 export interface IContactsForm {
-	email: string; // почта
-	phone: string; // телефон
+	email: string;
+	phone: string; 
 }
 
-// интерфейс данных заказа
+// заказ
 export interface IOrder extends IDeliveryForm, IContactsForm {
-	total: number; // сумма заказа
-	items: string[]; // массив с идентификаторами товаров
+	total: number;
+	items: string[]; 
 }
 
-// интерфейс корзины
+// корзина
 export interface IBasket {
-	items: HTMLElement[]; // массив карточек в корзине
-	total: number; // сумма заказа
+	items: HTMLElement[]; 
+	total: number; 
 }
